@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Encuesta: Preguntas para personas en adicciones</title>
+	<style>
+		:root{
+			--bg:#0f1724;
+			--card:#0b1220;
+			--accent:#6ee7b7;
+			--muted:#9aa4b2;
+			--glass: rgba(255,255,255,0.04);
+			--card-radius:14px;
+			color-scheme: dark;
+		}
+		*{box-sizing:border-box}
+		html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071028 0%, #081426 40%, #071026 100%);}
+		header{padding:28px 20px;display:flex;align-items:center;justify-content:space-between}
+		.brand{display:flex;align-items:center;gap:14px}
+		.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#042028}
+		.container{max-width:1000px;margin:0 auto;padding:28px}
+		main{padding:24px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:18px;min-height:60vh}
+		.card{background:linear-gradient(180deg,rgba(6,10,18,0.6),rgba(6,10,18,0.4));padding:18px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(255,255,255,0.03)}
+		h1,h2{margin:0 0 8px 0;color:var(--accent)}
+		.muted{color:var(--muted);font-size:0.95rem}
+		fieldset{border:1px solid rgba(255,255,255,0.03);padding:12px;border-radius:10px;margin-bottom:12px}
+		label{display:block;margin-bottom:8px}
+		input[type="text"],input[type="email"],select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+		.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+		.actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+		.btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer}
+		.accent-btn{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#042028;border:none}
+		@media(max-width:700px){.row{grid-template-columns:1fr}}
+	</style>
+  <script>  
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('encuesta');
+    // Tu URL de Google Apps Script ya conectada:
+    const urlGoogleScript = 'https://script.google.com/macros/s/AKfycbzlDzvJABlOde8DTNQt4lnEDhf9RDUBvDmU6yU9Fk28yMuuxzcgrreym_B6pSvl0chN/exec'; 
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        // Deshabilitamos el botón para evitar múltiples envíos
+        const submitBtn = form.querySelector('.accent-btn');
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = "Enviando...";
+        submitBtn.disabled = true;
+
+        // Enviamos los datos en segundo plano
+        fetch(urlGoogleScript, {
+            method: 'POST',
+            mode: 'no-cors', // Evita problemas de restricciones de origen (CORS)
+            body: new FormData(form)
+        })
+        .then(() => {
+            alert('¡Gracias por completar la encuesta! Tus respuestas han sido registradas.');
+            form.reset(); // Limpia los campos del formulario
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un error al enviar. Inténtalo de nuevo.');
+        })
+        .finally(() => {
+            // Restauramos el botón a su estado original
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        });
+    });
+});
+</script>
+</head>
+<body>
+	<header>
+		<div class="brand">
+			<div class="logo">AD</div>
+			<div>
+				<h1 class="title">Encuesta sobre adicciones</h1>
+				<p class="muted">Preguntas orientadas a diagnóstico y comprensión emocional (uso escolar).</p>
+			</div>
+		</div>
+		<div style="display:flex;gap:8px;align-items:center">
+			<a class="btn" href="index.html">← Volver</a>
+			<button class="btn" onclick="window.print()">📄 Imprimir</button>
+		</div>
+	</header>
+
+	<div class="container">
+		<main>
+			<section class="card">
+				<h2>Instrucciones</h2>
+				<p class="muted">Esta encuesta es un ejemplo para uso educativo. Responde con la mayor honestidad posible. Si la pregunta no aplica, puedes dejarla en blanco o marcar "Prefiero no decir".</p>
+			</section>
+
+			<form id="encuesta" class="card" autocomplete="off">
+				<fieldset>
+					<legend><strong>Datos demográficos (opcional)</strong></legend>
+					<div class="row">
+						<label>
+							Nombre o alias
+							<input type="text" name="nombre" placeholder="Ej. Juan" />
+						</label>
+						<label>
+							Edad
+							<input type="text" name="edad" placeholder="Ej. 24" />
+						</label>
+					</div>
+					<label>
+						Género
+						<select name="genero">
+							<option value="">Prefiero no decir</option>
+							<option>Femenino</option>
+							<option>Masculino</option>
+							<option>Otro</option>
+						</select>
+					</label>
+				</fieldset>
+
+				<fieldset>
+					<legend><strong>Historia de consumo</strong></legend>
+					<label>
+						¿Qué sustancias o conductas has usado en el último año? (marca las que apliquen)
+					</label>
+					<label><input type="checkbox" name="sustancias" value="alcohol" /> Alcohol</label>
+					<label><input type="checkbox" name="sustancias" value="tabaco" /> Tabaco / nicotina</label>
+					<label><input type="checkbox" name="sustancias" value="farmacos" /> Medicamentos sin receta</label>
+					<label><input type="checkbox" name="sustancias" value="cannabis" /> Cannabis</label>
+					<label><input type="checkbox" name="sustancias" value="cocaina" /> Cocaína / estimulantes</label>
+					<label><input type="checkbox" name="sustancias" value="otras" /> Otras / conducta (ej. juego, uso problemático de internet)</label>
+					<label>
+						Frecuencia aproximada de uso
+						<select name="frecuencia">
+							<option>Ocasional (menos de una vez por semana)</option>
+							<option>Semanal</option>
+							<option>Diario</option>
+							<option>No consumo actualmente</option>
+						</select>
+					</label>
+				</fieldset>
+
+				<fieldset>
+					<legend><strong>Motivaciones y emociones</strong></legend>
+					<label>¿Por qué sueles consumir o realizar la conducta? (marca las que apliquen)</label>
+					<label><input type="checkbox" name="motivo" value="curiosidad" /> Curiosidad / experimentación</label>
+					<label><input type="checkbox" name="motivo" value="presion" /> Presión de pares</label>
+					<label><input type="checkbox" name="motivo" value="aburrimiento" /> Aburrimiento / ocio</label>
+					<label><input type="checkbox" name="motivo" value="estres" /> Manejo de estrés / ansiedad</label>
+					<label><input type="checkbox" name="motivo" value="dolor" /> Alivio del dolor emocional</label>
+					<label>
+						En una escala del 1 al 5, ¿qué tan a menudo recurres al consumo para manejar emociones difíciles?
+						<select name="escala_emocional">
+							<option>1 - Nunca</option>
+							<option>2 - Rara vez</option>
+							<option>3 - A veces</option>
+							<option>4 - Con frecuencia</option>
+							<option>5 - Casi siempre</option>
+						</select>
+					</label>
+				</fieldset>
+
+				<fieldset>
+					<legend><strong>Impacto y consecuencias</strong></legend>
+					<label>¿Has notado consecuencias negativas por el consumo en alguna de estas áreas? (marca las que apliquen)</label>
+					<label><input type="checkbox" name="impacto" value="salud" /> Salud física</label>
+					<label><input type="checkbox" name="impacto" value="emocional" /> Salud emocional / mental</label>
+					<label><input type="checkbox" name="impacto" value="relaciones" /> Relaciones (familia, pareja, amistades)</label>
+					<label><input type="checkbox" name="impacto" value="trabajo" /> Estudios / trabajo</label>
+					<label><input type="checkbox" name="impacto" value="legal" /> Problemas legales</label>
+					<label>
+						¿Has intentado dejar o reducir el consumo alguna vez?
+						<select name="intentado_dejar">
+							<option>Sí, y lo logré temporalmente</option>
+							<option>Sí, pero recaí</option>
+							<option>No lo he intentado</option>
+						</select>
+					</label>
+				</fieldset>
+
+				<fieldset>
+					<legend><strong>Síntomas y efectos específicos</strong></legend>
+					<label>Marca los efectos que has experimentado relacionados con el consumo:</label>
+					<label><input type="checkbox" name="efecto" value="ansiedad" /> Ansiedad intensa</label>
+					<label><input type="checkbox" name="efecto" value="depresion" /> Tristeza o depresión</label>
+					<label><input type="checkbox" name="efecto" value="insomnio" /> Problemas de sueño</label>
+					<label><input type="checkbox" name="efecto" value="cambios_appetito" /> Cambios en el apetito</label>
+					<label><input type="checkbox" name="efecto" value="temblores" /> Temblores / sudoración</label>
+					<label><input type="checkbox" name="efecto" value="alucinaciones" /> Alucinaciones / percepciones alteradas</label>
+					<label><input type="checkbox" name="efecto" value="desorientacion" /> Confusión o desorientación</label>
+					<label><input type="checkbox" name="efecto" value="dolor" /> Dolor físico crónico</label>
+
+					<label>
+						Si experimentas alucinaciones u otras alteraciones perceptivas, indica su frecuencia:
+						<select name="freq_alucinaciones">
+							<option>Nunca</option>
+							<option>Rara vez</option>
+							<option>Ocasionalmente</option>
+							<option>Frecuentemente</option>
+							<option>Casi siempre</option>
+						</select>
+					</label>
+
+					<label>
+						En una escala de 0 a 10, ¿qué intensidad tiene tu deseo (craving) cuando te provoca usar?
+						<select name="craving">
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+							<option>10</option>
+						</select>
+					</label>
+
+					<label>
+						¿Has tenido episodios de sobredosis o pérdida de conciencia por consumo?
+						<select name="sobredosis">
+							<option>No</option>
+							<option>Sí, una vez</option>
+							<option>Sí, más de una vez</option>
+							<option>Prefiero no decir</option>
+						</select>
+					</label>
+
+					<label>
+						¿Usas vía inyectable actualmente o en el pasado?
+						<select name="via_inyectable">
+							<option>No</option>
+							<option>Sí, actualmente</option>
+							<option>Sí, en el pasado</option>
+						</select>
+					</label>
+				</fieldset>
+
+				<fieldset>
+					<legend><strong>Red de apoyo y búsqueda de ayuda</strong></legend>
+					<label>¿Has hablado con alguien sobre tu consumo? (familia, amigo, profesional)</label>
+					<label><input type="radio" name="hablado" value="si" /> Sí</label>
+					<label><input type="radio" name="hablado" value="no" /> No</label>
+					<label>
+						¿Qué tipo de ayuda sería más útil para ti ahora?
+						<textarea name="ayuda" rows="3" placeholder="Ej. Terapia individual, grupo de apoyo, tratamiento médico..."></textarea>
+					</label>
+					<label>
+						En una escala del 1 al 10, ¿qué tan listo/a te sientes para intentar un cambio ahora?
+						<select name="listo_cambio">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+							<option>10</option>
+						</select>
+					</label>
+				</fieldset>
+
+				<fieldset>
+					<legend><strong>Consentimiento (lectura rápida)</strong></legend>
+					<p class="muted">Esta es una encuesta anónima de ejemplo. Si vas a usarla con personas reales, asegúrate de obtener consentimiento informado y proteger la confidencialidad.</p>
+					<label><input type="checkbox" name="consentimiento" required /> Entiendo y doy mi consentimiento para responder (demo).</label>
+				</fieldset>
+
+				<div class="actions">
+					<button type="reset" class="btn">Limpiar</button>
+					<button type="submit" class="btn accent-btn">Enviar (demo)</button>
+				</div>
+			</form>
+
+			<footer style="margin-top:12px;color:var(--muted);text-align:center">Basado en el proyecto: Adicciones • Modelo educativo 2026</footer>
+		</main>
+	</div>
+</body>
+</html>
