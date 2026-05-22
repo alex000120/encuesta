@@ -33,43 +33,58 @@
 		.accent-btn{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#042028;border:none}
 		@media(max-width:700px){.row{grid-template-columns:1fr}}
 	</style>
-  <script>  
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('encuesta');
-    // Tu URL de Google Apps Script ya conectada:
-    const urlGoogleScript = 'https://script.google.com/macros/s/AKfycbzlDzvJABlOde8DTNQt4lnEDhf9RDUBvDmU6yU9Fk28yMuuxzcgrreym_B6pSvl0chN/exec'; 
+	<script>  
+	document.addEventListener('DOMContentLoaded', () => {
+	    const form = document.getElementById('encuesta');
+	    const urlGoogleScript = 'https://script.google.com/macros/s/AKfycbzlDzvJABlOde8DTNQt4lnEDhf9RDUBvDmU6yU9Fk28yMuuxzcgrreym_B6pSvl0chN/exec'; 
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        
-        // Deshabilitamos el botón para evitar múltiples envíos
-        const submitBtn = form.querySelector('.accent-btn');
-        const originalText = submitBtn.innerText;
-        submitBtn.innerText = "Enviando...";
-        submitBtn.disabled = true;
+	    form.addEventListener('submit', e => {
+	        e.preventDefault();
+	        
+	        // 1. Recopilar y guardar las opciones múltiples en los inputs ocultos correspondientes
+	        const getCheckedValues = (name) => {
+	            return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`))
+	                        .map(input => input.value)
+	                        .join(', ');
+	        };
 
-        // Enviamos los datos en segundo plano
-        fetch(urlGoogleScript, {
-            method: 'POST',
-            mode: 'no-cors', // Evita problemas de restricciones de origen (CORS)
-            body: new FormData(form)
-        })
-        .then(() => {
-            alert('¡Gracias por completar la encuesta! Tus respuestas han sido registradas.');
-            form.reset(); // Limpia los campos del formulario
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Hubo un error al enviar. Inténtalo de nuevo.');
-        })
-        .finally(() => {
-            // Restauramos el botón a su estado original
-            submitBtn.innerText = originalText;
-            submitBtn.disabled = false;
-        });
-    });
-});
-</script>
+	        document.getElementById('sustancias_lista').value = getCheckedValues('sustancias');
+	        document.getElementById('motivo_lista').value = getCheckedValues('motivo');
+	        document.getElementById('impacto_lista').value = getCheckedValues('impacto');
+	        document.getElementById('efecto_lista').value = getCheckedValues('efecto');
+
+	        // 2. Deshabilitamos el botón para evitar múltiples envíos
+	        const submitBtn = form.querySelector('.accent-btn');
+	        const originalText = submitBtn.innerText;
+	        submitBtn.innerText = "Enviando...";
+	        submitBtn.disabled = true;
+
+	        // 3. Capturamos TODOS los datos del formulario automáticamente usando FormData
+	        const formData = new FormData(form);
+	        const data = new URLSearchParams(formData);
+
+	        // 4. Enviamos los datos en segundo plano
+	        fetch(urlGoogleScript, {
+	            method: 'POST',
+	            mode: 'no-cors',
+	            body: data
+	        })
+	        .then(() => {
+	            alert('¡Gracias por completar la encuesta! Tus respuestas han sido registradas.');
+	            form.reset(); // Limpia los campos del formulario
+	        })
+	        .catch(error => {
+	            console.error('Error:', error);
+	            alert('Hubo un error al enviar. Inténtalo de nuevo.');
+	        })
+	        .finally(() => {
+	            // Restauramos el botón a su estado original
+	            submitBtn.innerText = originalText;
+	            submitBtn.disabled = false;
+	        });
+	    });
+	});
+	</script>
 </head>
 <body>
 	<header>
@@ -93,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				<p class="muted">Esta encuesta es un ejemplo para uso educativo. Responde con la mayor honestidad posible. Si la pregunta no aplica, puedes dejarla en blanco o marcar "Prefiero no decir".</p>
 			</section>
 
-			<form id="encuesta" class="card" autocomplete="off">
+			<form id="encuesta" class="card" autocomplete="off" action="https://script.google.com/macros/s/AKfycbzlDzvJABlOde8DTNQt4lnEDhf9RDUBvDmU6yU9Fk28yMuuxzcgrreym_B6pSvl0chN/exec" method="post">
 				<fieldset>
 					<legend><strong>Datos demográficos (opcional)</strong></legend>
 					<div class="row">
@@ -268,7 +283,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					<p class="muted">Esta es una encuesta anónima de ejemplo. Si vas a usarla con personas reales, asegúrate de obtener consentimiento informado y proteger la confidencialidad.</p>
 					<label><input type="checkbox" name="consentimiento" required /> Entiendo y doy mi consentimiento para responder (demo).</label>
 				</fieldset>
-
+				
+				<input type="hidden" name="sustancias_lista" id="sustancias_lista" />
+				<input type="hidden" name="motivo_lista" id="motivo_lista" />
+				<input type="hidden" name="impacto_lista" id="impacto_lista" />
+				<input type="hidden" name="efecto_lista" id="efecto_lista" />
+				
 				<div class="actions">
 					<button type="reset" class="btn">Limpiar</button>
 					<button type="submit" class="btn accent-btn">Enviar (demo)</button>
