@@ -135,14 +135,14 @@
 				<fieldset>
 					<legend><strong>Historia de consumo</strong></legend>
 					<label>
-						¿Qué sustancias o conductas has usado en el último año? (marca las que apliquen)
+						¿Qué sustancias o conductas has usado en el último año? (marca la principal)
 					</label>
-					<label><input type="checkbox" name="sustancias" value="alcohol" /> Alcohol</label>
-					<label><input type="checkbox" name="sustancias" value="tabaco" /> Tabaco / nicotina</label>
-					<label><input type="checkbox" name="sustancias" value="farmacos" /> Medicamentos sin receta</label>
-					<label><input type="checkbox" name="sustancias" value="cannabis" /> Cannabis</label>
-					<label><input type="checkbox" name="sustancias" value="cocaina" /> Cocaína / estimulantes</label>
-					<label><input type="checkbox" name="sustancias" value="otras" /> Otras / conducta (ej. juego, uso problemático de internet)</label>
+					<label><input type="radio" name="sustancias" value="alcohol" /> Alcohol</label>
+					<label><input type="radio" name="sustancias" value="tabaco" /> Tabaco / nicotina</label>
+					<label><input type="radio" name="sustancias" value="farmacos" /> Medicamentos sin receta</label>
+					<label><input type="radio" name="sustancias" value="cannabis" /> Cannabis</label>
+					<label><input type="radio" name="sustancias" value="cocaina" /> Cocaína / estimulantes</label>
+					<label><input type="radio" name="sustancias" value="otras" /> Otras / conducta (ej. juego, uso problemático de internet)</label>
 					<label>
 						Frecuencia aproximada de uso
 						<select name="frecuencia">
@@ -156,12 +156,12 @@
 
 				<fieldset>
 					<legend><strong>Motivaciones y emociones</strong></legend>
-					<label>¿Por qué sueles consumir o realizar la conducta? (marca las que apliquen)</label>
-					<label><input type="checkbox" name="motivo" value="curiosidad" /> Curiosidad / experimentación</label>
-					<label><input type="checkbox" name="motivo" value="presion" /> Presión de pares</label>
-					<label><input type="checkbox" name="motivo" value="aburrimiento" /> Aburrimiento / ocio</label>
-					<label><input type="checkbox" name="motivo" value="estres" /> Manejo de estrés / ansiedad</label>
-					<label><input type="checkbox" name="motivo" value="dolor" /> Alivio del dolor emocional</label>
+					<label>¿Por qué sueles consumir o realizar la conducta? (marca la principal)</label>
+					<label><input type="radio" name="motivo" value="curiosidad" /> Curiosidad / experimentación</label>
+					<label><input type="radio" name="motivo" value="presion" /> Presión de pares</label>
+					<label><input type="radio" name="motivo" value="aburrimiento" /> Aburrimiento / ocio</label>
+					<label><input type="radio" name="motivo" value="estres" /> Manejo de estrés / ansiedad</label>
+					<label><input type="radio" name="motivo" value="dolor" /> Alivio del dolor emocional</label>
 					<label>
 						En una escala del 1 al 5, ¿qué tan a menudo recurres al consumo para manejar emociones difíciles?
 						<select name="escala_emocional">
@@ -176,12 +176,12 @@
 
 				<fieldset>
 					<legend><strong>Impacto y consecuencias</strong></legend>
-					<label>¿Has notado consecuencias negativas por el consumo en alguna de estas áreas? (marca las que apliquen)</label>
-					<label><input type="checkbox" name="impacto" value="salud" /> Salud física</label>
-					<label><input type="checkbox" name="impacto" value="emocional" /> Salud emocional / mental</label>
-					<label><input type="checkbox" name="impacto" value="relaciones" /> Relaciones (familia, pareja, amistades)</label>
-					<label><input type="checkbox" name="impacto" value="trabajo" /> Estudios / trabajo</label>
-					<label><input type="checkbox" name="impacto" value="legal" /> Problemas legales</label>
+					<label>¿Ha notado consecuencias negativas por el consumo en alguna de estas áreas? (marca la principal)</label>
+					<label><input type="radio" name="impacto" value="salud" /> Salud física</label>
+					<label><input type="radio" name="impacto" value="emocional" /> Salud emocional / mental</label>
+					<label><input type="radio" name="impacto" value="relaciones" /> Relaciones (familia, pareja, amistades)</label>
+					<label><input type="radio" name="impacto" value="trabajo" /> Estudios / trabajo</label>
+					<label><input type="radio" name="impacto" value="legal" /> Problemas legales</label>
 					<label>
 						¿Has intentado dejar o reducir el consumo alguna vez?
 						<select name="intentado_dejar">
@@ -194,15 +194,15 @@
 
 				<fieldset>
 					<legend><strong>Síntomas y efectos específicos</strong></legend>
-					<label>Marca los efectos que has experimentado relacionados con el consumo:</label>
-					<label><input type="checkbox" name="efecto" value="ansiedad" /> Ansiedad intensa</label>
-					<label><input type="checkbox" name="efecto" value="depresion" /> Tristeza o depresión</label>
-					<label><input type="checkbox" name="efecto" value="insomnio" /> Problemas de sueño</label>
-					<label><input type="checkbox" name="efecto" value="cambios_appetito" /> Cambios en el apetito</label>
-					<label><input type="checkbox" name="efecto" value="temblores" /> Temblores / sudoración</label>
-					<label><input type="checkbox" name="efecto" value="alucinaciones" /> Alucinaciones / percepciones alteradas</label>
-					<label><input type="checkbox" name="efecto" value="desorientacion" /> Confusión o desorientación</label>
-					<label><input type="checkbox" name="efecto" value="dolor" /> Dolor físico crónico</label>
+					<label>Marca el efecto principal que has experimentado relacionado con el consumo:</label>
+					<label><input type="radio" name="efecto" value="ansiedad" /> Ansiedad intensa</label>
+					<label><input type="radio" name="efecto" value="depresion" /> Tristeza o depresión</label>
+					<label><input type="radio" name="efecto" value="insomnio" /> Problemas de sueño</label>
+					<label><input type="radio" name="efecto" value="cambios_appetito" /> Cambios en el apetito</label>
+					<label><input type="radio" name="efecto" value="temblores" /> Temblores / sudoración</label>
+					<label><input type="radio" name="efecto" value="alucinaciones" /> Alucinaciones / percepciones alteradas</label>
+					<label><input type="radio" name="efecto" value="desorientacion" /> Confusión o desorientación</label>
+					<label><input type="radio" name="efecto" value="dolor" /> Dolor físico crónico</label>
 
 					<label>
 						Si experimentas alucinaciones u otras alteraciones perceptivas, indica su frecuencia:
